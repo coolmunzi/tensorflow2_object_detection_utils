@@ -25,11 +25,12 @@ flags = tf.app.flags
 flags.DEFINE_string('csv_input', '', 'Path to the CSV input')
 flags.DEFINE_string('image_dir', '', 'Path to the image directory')
 flags.DEFINE_string('output_path', '', 'Path to output TFRecord')
+flags.DEFINE_string('class_path', '', 'Path to txt file containing class names')
 FLAGS = flags.FLAGS
 
 
 
-file  = open(r"images/class-names.txt",'r')
+file  = open(r"{}".format(FLAGS.class_path),'r')
 output_dict ={}
 classname = file.readline().strip()
 count=1
