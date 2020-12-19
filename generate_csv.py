@@ -2,6 +2,7 @@ import os
 import glob
 import pandas as pd
 import xml.etree.ElementTree as ET
+import argparse
 
 
 def xml_to_csv(path):
@@ -26,11 +27,16 @@ def xml_to_csv(path):
 
 
 def main():
-    for folder in ['train','test']:
-        image_path = os.path.join(os.getcwd(), ('images/' + folder))
-        xml_df = xml_to_csv(image_path)
-        xml_df.to_csv(('images/' + folder + '_labels.csv'), index=None)
-        print('Successfully converted xml to csv.')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-x', '--xml', required=True, help='Path to directory containing annotations (xml files)')
+    parser.add_argument('-o', '--output', required=True,
+                        help='Path to output csv file')
+    args = vars(parser.parse_args())
+
+    xml_path = args['xml']
+    xml_df = xml_to_csv(xml_path)
+    xml_df.to_csv(args['output'] , index=None)
+    print('Successfully converted xml to csv.')
 
 
 main()
